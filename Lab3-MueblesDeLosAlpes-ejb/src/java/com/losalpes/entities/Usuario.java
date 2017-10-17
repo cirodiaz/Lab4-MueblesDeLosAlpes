@@ -13,11 +13,19 @@
 package com.losalpes.entities;
 
 import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  * Clase que representa un usuario del sistema
  * 
  */
+@Entity
 public class Usuario
 {
 
@@ -28,31 +36,37 @@ public class Usuario
     /**
      * Nombre del usuario
      */
+    @Id
     private String login;
 
     /**
      * Contraseña del usuario
      */
+    @Column(nullable=false)
     private String contraseña;
 
     /**
      * Tipo de usuario
      */
+    @Column(nullable=false)
     private TipoUsuario tipoUsuario;
 
     /**
      * Nombres y apellidos del usuario
      */
+    @Column(nullable=false)
     private String nombreCompleto;
 
     /**
      * Número de documento de identidad
      */
+    @Column(nullable=false)
     private long documento;
 
     /**
      * Tipo de documento
      */
+    @Column(nullable=false)
     private TipoDocumento tipoDocumento;
 
     /**
@@ -68,31 +82,38 @@ public class Usuario
     /**
      * Ciudad de residencia del usuario
      */
+    @OneToOne
+    @JoinColumn(name="FK_CIUDAD")
     private Ciudad ciudad;
 
     /**
      * Dirección de residencia del usuario
      */
+    @Column(nullable=false)
     private String direccion;
 
     /**
      * Profesión del usuario
      */
+    @Column(nullable=false)
     private Profesion profesion;
 
     /**
      * Correo electrónico del usuario
      */
+    @Column(nullable=false,unique=true)
     private String correo;
 
     /**
      * Indica si el mueble fue seleccionado
      */
+    @Transient
     private boolean seleccion;
 
     /**
      * Devuelve un lista con todos las compras del usuario
      */
+    @OneToMany(mappedBy="comprador")
     private ArrayList<RegistroVenta>compras;
 
     //-----------------------------------------------------------

@@ -6,68 +6,68 @@
  * Licenciado bajo el esquema Academic Free License version 3.0
  *
  * Ejercicio: Muebles de los Alpes
- * 
+ *
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-
 package com.losalpes.entities;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Clase que representa una ciudad en el sistema
- * 
+ *
  */
-public class Ciudad
-{
-      
+@Entity
+public class Ciudad implements Serializable {
+
     //-----------------------------------------------------------
     // Atributos
     //-----------------------------------------------------------
-
     /**
      * Nombre de la ciudad
      */
+    @Id
     private String nombre;
 
     /**
      * Devuelve el nombre de la ciudad
+     *
      * @return nombre Nombre de la ciudad
      */
-    public String getNombre()
-    {
+    public String getNombre() {
         return nombre;
     }
 
     //-----------------------------------------------------------
     // Constructores
     //-----------------------------------------------------------
-
     /**
      * Constructor de la clase (sin argumentos)
      */
-    public Ciudad()
-    {
+    public Ciudad() {
 
     }
 
     /**
      * Constructor de la clase (con argumentos)
+     *
      * @param nombre
      */
-    public Ciudad(String nombre)
-    {
+    public Ciudad(String nombre) {
         this.nombre = nombre;
     }
 
     //-----------------------------------------------------------
     // Getters y setters
     //-----------------------------------------------------------
-
     /**
      * Modifica el nombre de la ciudad
+     *
      * @param nombre Nuevo nombre de la ciudad
      */
-    public void setNombre(String nombre)
-    {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
