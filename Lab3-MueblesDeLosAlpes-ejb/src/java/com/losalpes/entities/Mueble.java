@@ -25,7 +25,6 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Mueble implements Serializable {
-
     //-----------------------------------------------------------
     // Atributos
     //-----------------------------------------------------------
@@ -271,4 +270,5 @@ public class Mueble implements Serializable {
         cantidad--;
     }
 
+   
 }

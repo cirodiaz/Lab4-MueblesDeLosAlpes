@@ -22,6 +22,7 @@ import java.io.Serializable;
 @Entity
 public class Ciudad implements Serializable {
 
+
     //-----------------------------------------------------------
     // Atributos
     //-----------------------------------------------------------
@@ -70,5 +71,4 @@ public class Ciudad implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 }

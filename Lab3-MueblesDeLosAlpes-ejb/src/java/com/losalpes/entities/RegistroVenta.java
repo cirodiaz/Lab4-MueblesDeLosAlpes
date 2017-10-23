@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
@@ -26,6 +27,7 @@ import javax.persistence.Temporal;
  *
  */
 @Entity
+@Table(name="REGISTRO_VENTA")
 public class RegistroVenta implements Serializable {
 
     //-----------------------------------------------------------
@@ -45,7 +47,7 @@ public class RegistroVenta implements Serializable {
      * Producto vendido
      */
     @OneToOne
-    @JoinColumn(name = "FK_PRODUCTO")
+    @JoinColumn(name = "PRODUCTO")
     private Mueble producto;
 
     /**
@@ -57,13 +59,13 @@ public class RegistroVenta implements Serializable {
     /**
      * Ciudad en la que se vendió el producto
      */
-    @Column(nullable = false)
     private String ciudad;
 
     /**
      * Usuario que compró el producto
      */
     @ManyToOne
+    @JoinColumn(name = "COMPRADOR")
     private Usuario comprador;
        
 

@@ -11,6 +11,7 @@
  */
 package com.losalpes.servicios;
 
+import com.losalpes.entities.Ciudad;
 import com.losalpes.entities.Mueble;
 import com.losalpes.entities.RegistroVenta;
 import com.losalpes.entities.Usuario;

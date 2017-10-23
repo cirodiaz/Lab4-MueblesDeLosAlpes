@@ -59,7 +59,7 @@ public class ServicioSeguridadMock implements IServicioSeguridadMockLocal {
         Usuario u = (Usuario) persistencia.findById(Usuario.class, nombre);
 
         if (u != null) {
-            if (u.getLogin().equals(nombre) && u.getContraseña().equals(contraseña)) {
+            if (u.getLogin().equals(nombre) && u.getContrasena().equals(contraseña)) {
                 return u;
             } else {
                 throw new AutenticacionException("La contraseña no es válida. Por favor, asegúrate de que el bloqueo de mayúsculas no está activado e inténtalo de nuevo.");
