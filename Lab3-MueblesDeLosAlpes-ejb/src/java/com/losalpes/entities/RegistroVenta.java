@@ -16,10 +16,12 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
@@ -27,27 +29,38 @@ import javax.persistence.Temporal;
  *
  */
 @Entity
-@Table(name="REGISTRO_VENTA")
+@IdClass(RegistroVentaPK.class)
+@NamedQueries({
+		@NamedQuery(name = "ReporteVenta.findByUsuario", 
+				query = "select r from RegistroVenta r where r.comprador =:cliente"),
+    
+                @NamedQuery(name = "ReporteVenta.findMaxMueblesVendidos", 
+				query = "select sum(r.cantidad) as cantidad, r.producto from RegistroVenta r GROUP BY r")
+                
+})
+
 public class RegistroVenta implements Serializable {
 
     //-----------------------------------------------------------
     // Atributos
     //-----------------------------------------------------------
     
-    @Id
-    private Long id;
+    //@Id
+    //private Long id;
     
     /**
      * Fecha en la que se vendió el producto
      */
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Id
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaVenta;
 
     /**
      * Producto vendido
      */
+    @Id
     @OneToOne
-    @JoinColumn(name = "PRODUCTO")
+    @JoinColumn(name = "MUEBLEID")
     private Mueble producto;
 
     /**
@@ -64,6 +77,7 @@ public class RegistroVenta implements Serializable {
     /**
      * Usuario que compró el producto
      */
+    @Id
     @ManyToOne
     @JoinColumn(name = "COMPRADOR")
     private Usuario comprador;
@@ -190,12 +204,13 @@ public class RegistroVenta implements Serializable {
         this.comprador = comprador;
     }
 
-    public Long getId() {
+    /*public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
+    */
 
 }

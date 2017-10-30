@@ -11,7 +11,6 @@
  */
 package com.losalpes.servicios;
 
-import com.losalpes.entities.TipoUsuario;
 import com.losalpes.entities.Usuario;
 import com.losalpes.excepciones.AutenticacionException;
 import javax.ejb.EJB;
@@ -50,16 +49,17 @@ public class ServicioSeguridadMock implements IServicioSeguridadMockLocal {
      * Registra el ingreso de un usuario al sistema.
      *
      * @param nombre Login del usuario que quiere ingresar al sistema.
-     * @param contraseña Contraseña del usuario que quiere ingresar al sistema.
+     * @param contrasena Contraseña del usuario que quiere ingresar al sistema.
      * @return usuario Retorna el objeto que contiene la información del usuario
      * que ingreso al sistema.
      */
     @Override
-    public Usuario ingresar(String nombre, String contraseña) throws AutenticacionException {
+    public Usuario ingresar(String nombre, String contrasena) throws AutenticacionException {
+        
         Usuario u = (Usuario) persistencia.findById(Usuario.class, nombre);
 
         if (u != null) {
-            if (u.getLogin().equals(nombre) && u.getContrasena().equals(contraseña)) {
+            if (u.getLogin().equals(nombre) && u.getContrasena().equals(contrasena)) {
                 return u;
             } else {
                 throw new AutenticacionException("La contraseña no es válida. Por favor, asegúrate de que el bloqueo de mayúsculas no está activado e inténtalo de nuevo.");

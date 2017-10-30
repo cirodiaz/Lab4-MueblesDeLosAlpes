@@ -11,9 +11,13 @@
  */
 package com.losalpes.entities;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -36,6 +40,7 @@ public class Pais {
      * Ciudades que tiene el país
      */
     @OneToMany
+    @JoinColumn(name="PAISID", foreignKey=@ForeignKey(name="FK_PAIS"))
     private List<Ciudad> ciudades;
 
     //-----------------------------------------------------------

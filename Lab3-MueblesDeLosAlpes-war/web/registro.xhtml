@@ -175,14 +175,14 @@
 
                     <div class="ui-grid ui-grid-responsive">
                         <div class="ui-grid-row">
-                            <div class="ui-grid-col-12">
+                            <div class="ui-grid-col-6">
                                 <p:outputLabel for="TxtPwd"
                                                value="Contraseña"
                                                style="font-weight: bold"/>
                                 <p:password id="TxtPwd"
                                             maxlength="20"
                                             size="20"
-                                            value="#{registroBean.usuario.contraseña}"
+                                            value="#{registroBean.usuario.contrasena}"
                                             label="Contraseña"
                                             required="true">
                                     <f:validateLength minimum="6" maximum="15" />

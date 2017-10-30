@@ -42,6 +42,13 @@
         <managed-bean-class>com.losalpes.beans.VendedorBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+        <description>Managed Bean encargado de la administración de ventas en el sistema</description>
+        <managed-bean-name>ventaBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.beans.VentaBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
     <!-- Reglas de navegación -->
     <navigation-rule>
@@ -89,6 +96,14 @@
         <navigation-case>
             <from-outcome>login</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/menu.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/reporteVentas.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

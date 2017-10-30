@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+    Document   : reporteVentas
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:param name="titulo" value="Reporte" />
+    <ui:define name="body">
+         <h:form>
+            <div align="right" style="padding-right: 10px">
+                <h:commandButton style="background: transparent" image="./resources/img/pag/atras.png" action="menu.xhtml"/>
+            </div>
+        </h:form>
+        
+        <h3>Reporte de Ventas Por Usuario</h3>
+        
+         <h:form id="formInput">    
+
+               <p:panel>
+                <h:panelGrid  columns="6" cellpadding="5">                    
+                                                           
+                    <p:outputLabel for="TxtNombre" style="width: 100px;"
+                                   value="Nombres"/>
+                    <p:inputText id="TxtNombre"
+                                 style="width: 192px;"
+                                 label="Nombre"
+                                 value="#{ventaBean.cliente.login}"
+                                 required="true"
+                                 >
+                    </p:inputText>
+                    <h:message id="nomMsg" for="TxtNombre" />
+
+                  
+                </h:panelGrid>           
+                              
+                <h:commandButton value="Consultar" action="#{ventaBean.consultarVentasPorUsuario}" />
+            </p:panel>
+        </h:form>
+        
+        
+       
+        <h:form>
+           
+           <p:dataTable 
+                widgetVar="ventas"
+                value="#{ventaBean.ventasPorUsuario}"                
+                var="item"
+                scrollable="false"
+                scrollHeight="100px"
+                paginator="true"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                resizableColumns="true"
+                rows="5">
+
+                <p:column filterBy="#{item.fechaVenta}" headerText="Fecha" sortBy="#{item.fechaVenta}"  filterMatchMode="contains">
+                    <p:outputLabel value="#{item.fechaVenta}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </p:outputLabel>   
+                </p:column> 
+
+
+                <p:column filterBy="#{item.producto.tipo}"  filterMatchMode="exact" headerText="Tipo" sortBy="#{item.producto.tipo}">
+                    <f:facet name="filter">                        
+                        <p:selectOneMenu onchange="PF('ventasDiarias').filter()">
+                            <f:selectItem itemLabel="Todos" itemValue="" />
+                            <f:selectItem itemLabel="Interior" itemValue="Interior" />
+                            <f:selectItem itemLabel="Exterior" itemValue="Exterior" />
+                        </p:selectOneMenu>                       
+
+                    </f:facet>
+                    <h:outputText value="#{item.producto.tipo}" />
+                </p:column>
+
+
+                <p:column filterBy="#{item.producto.referencia}" filterMatchMode="contains" headerText="Referencia" sortBy="#{item.producto.referencia}">
+                    <h:outputText value="#{item.producto.referencia}" />
+                </p:column>          
+
+
+
+                <p:column headerText="Nombre" sortBy="#{item.producto.nombre}">
+                    <h:outputText value="#{item.producto.nombre}" />
+                </p:column>
+
+
+                <p:column  headerText="Cantidad" sortBy="#{item.cantidad}">
+                    <h:outputText value="#{item.cantidad}" />
+                </p:column>
+
+
+
+                <p:column filterBy="#{item.comprador}" filterMatchMode="contains" headerText="Cliente" sortBy="#{item.comprador}">
+                    <h:outputText value="#{item.comprador.login}" />
+                </p:column>
+
+
+                <p:column  headerText="Precio Unitario" sortBy="#{item.producto.precio}">
+                    <h:outputText value="#{item.producto.precio}" />
+                </p:column>
+
+
+                <p:column  headerText="Precio Total" sortBy="#{item.producto.precio * item.cantidad}">
+                    <h:outputText value="#{item.producto.precio * item.cantidad}" />
+                </p:column>    
+
+            </p:dataTable>
+
+        </h:form>
+
+
+        
+        
+        
+        <h3>Reporte de los tres muebles mas vendidos</h3>
+         
+         <h:form>    
+            <p:panel>                                           
+                <h:commandButton value="Consultar" action="#{ventaBean.consultarTresMueblesMasVendidos}" />
+            </p:panel>
+        </h:form>   
+        
+       
+        <h:form>
+           
+            <!-- Tabla dinamica con filtros en donde se pueden generar los diferentes reportes de venta solicitados en el enunciado -->
+            <p:dataTable 
+                widgetVar="ventas"
+                value="#{ventaBean.tresMueblesMasVendidos}"                
+                var="item"
+                scrollable="false"
+                scrollHeight="100px"
+                paginator="true"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                resizableColumns="true"
+                rows="5">
+
+                <p:column headerText="Referencia" sortBy="#{item.producto.referencia}">
+                    <h:outputText value="#{item.producto.referencia}" />
+                </p:column>     
+
+                  
+
+
+                <p:column headerText="Cantidad" sortBy="#{item.cantidad}">
+                    <h:outputText value="#{item.cantidad}" />
+                </p:column>              
+
+            </p:dataTable>
+
+
+        </h:form>
+
+        
+        
+        
+        
+    </ui:define>
+
+
+</ui:composition>

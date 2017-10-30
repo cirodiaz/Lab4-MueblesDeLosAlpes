@@ -20,7 +20,7 @@ import java.io.Serializable;
  *
  */
 @Entity
-public class Ciudad implements Serializable {
+public class Ciudad {
 
 
     //-----------------------------------------------------------

@@ -15,8 +15,11 @@ import com.losalpes.entities.Ciudad;
 import com.losalpes.entities.Mueble;
 import com.losalpes.entities.RegistroVenta;
 import com.losalpes.entities.Usuario;
+import com.losalpes.excepciones.OperacionInvalidaException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -59,6 +62,7 @@ public class ServicioCarritoMock implements IServicioCarritoMockRemote, IServici
      */
     public ServicioCarritoMock() {
         inventario = new ArrayList<Mueble>();
+        persistencia=new ServicioPersistencia();
     }
 
     //-----------------------------------------------------------
@@ -113,17 +117,23 @@ public class ServicioCarritoMock implements IServicioCarritoMockRemote, IServici
      * @param usuario Usuario que realiza la compra
      */
     @Override
-    public void comprar(Usuario usuario) {
+     public void comprar(Usuario usuario)   {    
         Mueble mueble;
-        for (int i = 0; i < inventario.size(); i++) {
-            mueble = inventario.get(i);
-            Mueble editar = (Mueble) persistencia.findById(Mueble.class, mueble.getReferencia());
-            editar.setCantidad(editar.getCantidad() - mueble.getCantidad());
-            RegistroVenta compra = new RegistroVenta(new Date(System.currentTimeMillis()), mueble, mueble.getCantidad(), null, usuario);
-            usuario.agregarRegistro(compra);
-
-            persistencia.update(usuario);
-            persistencia.update(editar);
+        for (int i = 0; i < inventario.size(); i++)
+        {
+            try {
+                mueble = inventario.get(i);
+                Mueble editar=(Mueble) persistencia.findById(Mueble.class, mueble.getReferencia());
+                editar.setCantidad(editar.getCantidad()-mueble.getCantidad());
+                RegistroVenta compra=new RegistroVenta(new Date(System.currentTimeMillis()), mueble, mueble.getCantidad(), null, usuario);
+                usuario.agregarRegistro(compra);
+                persistencia.create(compra);
+                
+                persistencia.update(usuario);
+                persistencia.update(editar);
+            } catch (OperacionInvalidaException ex) {
+                Logger.getLogger(ServicioCarritoMock.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         limpiarLista();
     }
@@ -146,9 +156,13 @@ public class ServicioCarritoMock implements IServicioCarritoMockRemote, IServici
             }
         }
 
-        // Si el item no se encuentra se agrega al inventario
-        if (!found) {
-            inventario.add(mueble);
+        // Si el item no se encuentra se agrega al carrito de compras por primera vez
+        if (!found)
+        {
+            // Se instancia el item con los atributos del mueble en el inventario pero con una sola unidad
+            item = new Mueble(mueble.getReferencia(), mueble.getNombre(), mueble.getDescripcion(), 
+                    mueble.getTipo(), 1, mueble.getImagen(), mueble.getPrecio());
+            inventario.add(item);
             mueble.incrementarCantidad();
         }
 

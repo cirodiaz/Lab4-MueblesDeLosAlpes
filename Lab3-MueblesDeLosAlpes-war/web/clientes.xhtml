@@ -12,6 +12,7 @@
 
     <ui:param name="titulo" value="Catálogo de muebles" />
     <ui:define name="body">
+       
         <h:form>
             <h:outputText id="linkHeader"
                           value="Administración de usuarios" style="color:white"/>
@@ -193,7 +194,7 @@
                                     <p:password id="TxtPwd"
                                                 maxlength="20"
                                                 size="20"
-                                                value="#{registroBean.usuario.contraseña}"
+                                                value="#{registroBean.usuario.contrasena}"
                                                 label="Contraseña"
                                                 required="true">
                                         <f:validateLength minimum="6" maximum="15" />
