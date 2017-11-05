@@ -35,16 +35,13 @@ import javax.persistence.Temporal;
 				query = "select r from RegistroVenta r where r.comprador =:cliente"),
     
                 @NamedQuery(name = "ReporteVenta.findMaxMueblesVendidos", 
-				query = "select sum(r.cantidad) as cantidad, r.producto from RegistroVenta r GROUP BY r"),
+				query = "select sum(r.cantidad) as cantidad, r.producto from RegistroVenta r group by r order by cantidad desc"),
                 
                 @NamedQuery(name = "ReporteVenta.findMayoresCompradoresPorPais", 
 				query = "select u, count(r.cantidad) as cantidadcompras,sum(r.cantidad*m.precio) as valorcompras"
                                 + " from RegistroVenta r, Mueble m, Usuario u  where m.referencia = r.producto.referencia"
                                 + " and r.comprador.login = u.login  and u.ciudad in :ciudades group by r.comprador, u.ciudad, u.nombreCompleto order by valorcompras desc")
                 
-
-
-
 })
 
 public class RegistroVenta implements Serializable {
