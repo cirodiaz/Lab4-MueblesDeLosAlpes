@@ -11,9 +11,12 @@
  */
 package com.losalpes.servicios;
 
+import com.losalpes.entities.Mueble;
+import com.losalpes.entities.Pais;
 import com.losalpes.entities.RegistroVenta;
 import com.losalpes.entities.Usuario;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Remote;
 
 /**
@@ -32,8 +35,15 @@ public interface IServicioReporteVentasMockRemoto {
     
     /**
      * Retorna los tres muebles mas vendidos   
-     * @return ventas lista de los tres muebles
+     * @return muebles lista de los tres muebles
      */
-    public List<RegistroVenta> getTresMueblesMasVendidos();
+    public List<Mueble> getTresMueblesMasVendidos();
+    
+    /**
+     * Retorna los cinco mayores compradores por país
+     * @param pais Pais por el cual se va a realizar la consulta
+     * @return ventas lista de los cinco compradores
+     */
+    public List<RegistroVenta> getMayoresCompradoresPorPais(Pais pais);
 
 }

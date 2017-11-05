@@ -11,13 +11,13 @@
  */
 package com.losalpes.entities;
 
-import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -25,6 +25,10 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "Pais.findCiudadesPorPais", 
+				query = "select p.ciudades from Pais p where p.nombre=:pais")
+})        
 public class Pais {
 
     //-----------------------------------------------------------

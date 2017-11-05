@@ -17,6 +17,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 /**
@@ -24,6 +26,11 @@ import javax.persistence.Transient;
  *
  */
 @Entity
+@NamedQueries({
+                @NamedQuery(name = "Mueble.findTresMueblesMasVendidos", 
+				query = "select m, sum(r.cantidad) as cantidad from RegistroVenta r, Mueble m where r.producto.referencia = m.referencia" +
+                                " group by r.producto, m.nombre order by cantidad desc")
+ })
 public class Mueble implements Serializable {
     //-----------------------------------------------------------
     // Atributos
